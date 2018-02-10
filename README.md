@@ -24,8 +24,8 @@ For Node installation see https://nodejs.org/en/download/
 ## Clone
 
 ```
-  git clone ???
-  cd ???
+  git clone https://github.com/eco-transports-campus/app.git etc-app
+  cd etc-app
   npm install
 ```
 
