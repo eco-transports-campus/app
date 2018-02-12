@@ -1,8 +1,8 @@
 import test from 'ava';
 import request from 'supertest';
 import app from '../../server';
-import Post from '../post';
-import { connectDB, dropDB } from '../../../config/util/test-helpers';
+import Post from '../post.model';
+import { connectDB, dropDB } from '../../util/test-helpers';
 
 // Initial posts added into test db
 const posts = [
