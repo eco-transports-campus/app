@@ -3,7 +3,7 @@ import compression from 'compression';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import path from 'path';
-import IntlWrapper from '../client/Intl/IntlWrapper';
+import IntlWrapper from '../client/modules/intl/IntlWrapper';
 
 // Webpack Requirements
 import webpack from 'webpack';
@@ -35,8 +35,8 @@ import Helmet from 'react-helmet';
 
 // Import required modules
 import routes from '../client/routes';
-import { fetchComponentData } from '../config/util/fetchData';
-import posts from './posts/routes/post.routes';
+import { fetchComponentData } from './util/fetchData';
+import posts from './routes/post.routes';
 import dummyData from '../config/mocks/dummyData';
 import serverConfig from './config';
 

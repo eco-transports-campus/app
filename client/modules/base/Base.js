@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 // Import Style
-import styles from './App.css';
+import styles from './Base.css';
 
 // Import Components
 import Helmet from 'react-helmet';
@@ -11,10 +11,10 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 
 // Import Actions
-import { toggleAddPost } from './AppActions';
-import { switchLanguage } from '../Intl/IntlActions';
+import { toggleAddPost } from './BaseActions';
+import { switchLanguage } from '../intl/IntlActions';
 
-export class App extends Component {
+export class Base extends Component {
   constructor(props) {
     super(props);
     this.state = { isMounted: false };
@@ -35,7 +35,7 @@ export class App extends Component {
         <div>
           <Helmet
             title="ETC App"
-            titleTemplate="%s - Blog App"
+            titleTemplate="%s - ETC App"
             meta={[
               { charset: 'utf-8' },
               {
@@ -63,7 +63,7 @@ export class App extends Component {
   }
 }
 
-App.propTypes = {
+Base.propTypes = {
   children: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
@@ -76,4 +76,4 @@ function mapStateToProps(store) {
   };
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(Base);

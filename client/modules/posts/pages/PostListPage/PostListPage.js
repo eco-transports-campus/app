@@ -6,11 +6,11 @@ import PostList from '../../components/PostList';
 import PostCreateWidget from '../../components/PostCreateWidget/PostCreateWidget';
 
 // Import Actions
-import { addPostRequest, fetchPosts, deletePostRequest } from '../../actions/PostActions';
-import { toggleAddPost } from '../../../App/AppActions';
+import { addPostRequest, fetchPosts, deletePostRequest } from '../../PostActions';
+import { toggleAddPost } from '../../../base/BaseActions';
 
 // Import Selectors
-import { getShowAddPost } from '../../../App/AppReducer';
+import { getShowAddPost } from '../../../base/BaseReducer';
 import { getPosts } from '../../PostReducer';
 
 class PostListPage extends Component {

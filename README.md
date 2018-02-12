@@ -117,41 +117,84 @@ Webpack is used for bundling modules.
 
 ```
 etc-app
-└── config                          // config and env stuff
-    ├── assets                      // pour les lib externes 
-    ├── lib                         // nos propres lib d'accès à des API externes pour le calcul de stats ou d'emprunte énergétique par exemple ??
-    └── env                         // variables d'environnement
-        └── defaults.js             
-        └── dev.js                  
-        └── prod.js
-        └── tests.js
-└── client                          // front
-    ├── base                        // base stuff : authentification panel / navbar / sidebar / css base
-    ├── users                       // page user / reglagages des preferences / etc
-        └── pages                   // elements relatifs à la page globale
-        └── components              // composants utilisés dans la page
+├── config                          // config and env stuff
+    ├── blueprints                  // templates for files generator
+    ├── mocks                       // data mocks
+    └── services                    // apis
+├── client                          // front
+    ├── modules
+        ├── base                    // base stuff : authentification panel / navbar / sidebar / css base
+            ├── __tests__           // unit tests
+            ├── components          // react components
+            ├── pages               // react pages
+            └── ...                 // other folders
+        └── ...
+    ├── util                        // tools for client
+    ├── reducer.js                  // global reducer (React)
+    ├── route.js                    // global routing (React)
+    ├── store.js                    // store (React)
+    └── + other js file
+├── server                          // back
+    ├── controllers                 // controllers : fonctions CRUD
+    ├── routes                      // routing REST
+    ├── models                      // mongoose models
+        ├── ...                     // model files
         └── __tests__               // tests unitaires
-    ├── trajets                     // demande / proposition trajets / création
-    ├── statistiques                // simples requetes de stats
-    ├── messagerie                  // front messagerie
-└── server
-    ├── users                       // gestion des users
-        └── controllers             // functions CRUD
-        └── routes                  // routing REST
-        └── models                  // model mongo de l'objet user
-        └── __tests__               // tests unitaires
-    ├── trajets                     // gestion des trajets
-    ├── statistiques                // gestion des stats
-    ├── authentification            // authentification CAS u-psud
-    ├── messagerie                  // messagerie gestion
-    ├── notifications               // gestion websocktets
-        └── controllers/routes/models/tests
-        └── sockets                 // gestion des sockets de notifiations (events etc)
-    └── map                         // gestion services de map
-└── node_modules                    // npm
-└── + fichiers webpacks/docker/travis/divers.js
+    ├── sockets                     // events etc
+    ├── util                        // server tools
+    ├── config.js                   // config server
+    └── server.js                   // server file
+├── node_modules                    // npm
+└── + files webpacks/docker/travis/divers.js
 ```
 
+# Warnings
+
+There are warnings because we are using React < v16.0 because of MERN v2.
+
+
+# Files Generator
+
+## mern.json
+It contains a blueprints array. Each object in it is the config for a generator. A blueprint config contains the name, description, usage, and files array.
+
+A file object contains
+
+1. `blueprint-path` - location of the blueprint file
+
+2. `target-path` - location where the file should be generated
+
+3. `parent-path` - optional parameter, used if you want to generate the file inside an already existing folder in your project.
+
+Also, `target-path` supports [ejs](https://github.com/mde/ejs) and the following variables will be passed while rendering,
+
+1. `name` - `<component-name>` input from user
+
+2. `parent` - in particular special cases where you need to generate files inside an already existing folder, you can obtain this parent variable from the user. A config using that will look like,
+
+3. `helpers` - an helper object is passed which include common utility functions. For now, it contains `capitalize`.
+
+An example blueprint config
+
+```
+{
+    "name": "dumb-m",
+    "description": "Generates a dumb react component in a module directory",
+    "usage": "dumb-m <module-name>/<component-name>",
+    "files": [
+    {
+        "blueprint-path": "config/blueprints/dumb-component.ejs",
+        "parent-path": "client/modules/<%= helpers.capitalize(parent) %>",
+        "target-path": "components/<%= helpers.capitalize(name) %>/<%= helpers.capitalize(name) %>.js"
+    }
+    ]
+}
+```
+
+Here, notice the usage. In `<module-name>/<component-name>`, `<module-name>` will be passed as `parent` and `<component-name>` will be passed as `<name>`.
+
+### Blueprint files
+Blueprints are basically [ejs](https://github.com/mde/ejs) templates which are rendered with the same three variables(`name`, optional `parent` and `helpers` object) as above.
 
 <!-- ## Client
 
@@ -195,62 +238,8 @@ Modules are the way of organising different domain-specific modules in the proje
     └── PostActions.js
 ```
 
-## Misc
-
-### Importing Assets
-Assets can be kept where you want and can be imported into your js files or css files. Those fill be served by webpack in development mode and copied to the dist folder during production.
 
 
-
-#### mern.json
-It contains a blueprints array. Each object in it is the config for a generator. A blueprint config contains the name, description, usage, and files array. An example blueprint config
-```
-{
-  "name": "dumb-s",
-  "description": "Generates a dumb react component in shared components",
-  "usage": "dumb-s [component-name]",
-  "files": [
-    {
-      "blueprint-path": "config/blueprints/dumb-component.ejs",
-      "target-path": "client/components/<%= helpers.capitalize(name) %>.js"
-    }
-  ]
-}
-```
-
-A file object contains
-
-1. `blueprint-path` - location of the blueprint file
-
-2. `target-path` - location where the file should be generated
-
-3. `parent-path` - optional parameter, used if you want to generate the file inside an already existing folder in your project.
-
-Also, `target-path` supports [ejs](https://github.com/mde/ejs) and the following variables will be passed while rendering,
-
-1. `name` - `<component-name>` input from user
-
-2. `parent` - in particular special cases where you need to generate files inside an already existing folder, you can obtain this parent variable from the user. A config using that will look like,
-    ```
-    {
-      "name": "dumb-m",
-      "description": "Generates a dumb react component in a module directory",
-      "usage": "dumb-m <module-name>/<component-name>",
-      "files": [
-        {
-          "blueprint-path": "config/blueprints/dumb-component.ejs",
-          "parent-path": "client/modules/<%= helpers.capitalize(parent) %>",
-          "target-path": "components/<%= helpers.capitalize(name) %>/<%= helpers.capitalize(name) %>.js"
-        }
-      ]
-    }
-    ```
-    Here, notice the usage. In `<module-name>/<component-name>`, `<module-name>` will be passed as `parent` and `<component-name>` will be passed as `<name>`.
-
-3. `helpers` - an helper object is passed which include common utility functions. For now, it contains `capitalize`. If you want to add more, send a PR to [mern-cli](https://github.com/Hashnode/mern-cli).
-
-#### Blueprint files
-Blueprints are basically [ejs](https://github.com/mde/ejs) templates which are rendered with the same three variables(`name`, optional `parent` and `helpers` object) as above.
 
 ### Caveats
 
@@ -261,47 +250,3 @@ In development, after all scripts get loaded, react loads the CSS as BLOBs. That
 
 #### Client and Server Markup Mismatch
 This warning is visible only on development and totally harmless. This occurs to hash difference in `react-router`. To solve it, react router docs asks you to use `match` function. If we use `match`, `react-hot-reloader` stops working.
-
-SOLUTION 2
-
-etc-app
-└── config                          // config and env stuff
-    ├── assets                      // pour les lib externes 
-    ├── lib                         // nos propres lib d'accès à des API externes pour le calcul de stats ou d'emprunte énergétique par exemple ??
-    └── env                         // variables d'environnement
-        └── defaults.js             
-        └── dev.js                  
-        └── prod.js
-        └── tests.js
-└── modules                         // front ET back
-    ├── base                        // base stuff : authentification panel / navbar / sidebar / css base
-        └── client                  // page user / reglagages des preferences / etc
-            └── pages               // elements relatifs à la page globale
-            └── components          // composants utilisés dans la page
-            └── __tests__           // tests unitaires                        
-    ├── users
-        └── client                  // page user / reglagages des preferences / etc
-            └── pages                   // elements relatifs à la page globale
-            └── components              // composants utilisés dans la page
-            └── __tests__               // tests unitaires
-        └── server
-            └── controllers             // functions CRUD
-            └── routes                  // routing REST
-            └── models                  // model mongo de l'objet user
-            └── __tests__               // tests unitaires
-    ├── trajets                     // demande / proposition trajets / création
-    ├── statistiques                // simples requetes de stats
-    ├── messagerie                  // front messagerie
-    ├── trajets                     // gestion des trajets
-    ├── statistiques                // gestion des stats
-    ├── authentification            // authentification CAS u-psud
-    ├── messagerie                  // messagerie gestion
-    ├── notifications   
-        └── client
-            └── ...            
-        └── server
-            └── ...
-            └── sockets             // gestion des sockets de notifiations (events etc)
-    └── map                         // gestion services de map
-└── node_modules                    // npm
-└── + fichiers webpacks/docker/travis/divers.js-->

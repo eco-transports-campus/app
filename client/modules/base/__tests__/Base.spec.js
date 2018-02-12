@@ -3,10 +3,10 @@ import test from 'ava';
 import sinon from 'sinon';
 import { shallow, mount } from 'enzyme';
 import { App } from '../App';
-import styles from '../App.css';
+import styles from '../Base.css';
 import { intlShape } from 'react-intl';
 import { intl } from '../../../util/react-intl-test-helper';
-import { toggleAddPost } from '../AppActions';
+import { toggleAddPost } from '../BaseActions';
 
 const intlProp = { ...intl, enabledLanguages: ['en', 'fr'] };
 const children = <h1>Test</h1>;

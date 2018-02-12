@@ -8,7 +8,7 @@ import {
   addPost,
   deletePost,
   addPosts,
-} from '../actions/PostActions';
+} from '../PostActions';
 
 const post = { name: 'Prashant', title: 'Hello Mern', cuid: 'f34gb2bh24b24b2', content: "All cats meow 'mern!'", slug: 'hello-mern', _id: 1 };
 

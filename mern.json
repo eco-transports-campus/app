@@ -1,17 +1,6 @@
 {
   "blueprints": [
     {
-      "name": "dumb-s",
-      "description": "Generates a dumb react component in shared components",
-      "usage": "dumb-s [component-name]",
-      "files": [
-        {
-          "blueprint-path": "config/blueprints/dumb-component.ejs",
-          "target-path": "client/components/<%= helpers.capitalize(name) %>.js"
-        }
-      ]
-    },
-    {
       "name": "dumb-m",
       "description": "Generates a dumb react component in a module directory",
       "usage": "dumb-m <module-name>/<component-name>",
@@ -20,17 +9,6 @@
           "blueprint-path": "config/blueprints/dumb-component.ejs",
           "parent-path": "client/<%= helpers.capitalize(parent) %>",
           "target-path": "components/<%= helpers.capitalize(name) %>/<%= helpers.capitalize(name) %>.js"
-        }
-      ]
-    },
-    {
-      "name": "functional-s",
-      "description": "Generates a functional react component in shared components",
-      "usage": "functional-s [component-name]",
-      "files": [
-        {
-          "blueprint-path": "config/blueprints/functional-component.ejs",
-          "target-path": "client/components/<%= helpers.capitalize(name) %>.js"
         }
       ]
     },
@@ -53,19 +31,19 @@
       "files": [
         {
           "blueprint-path": "config/blueprints/module/module.ejs",
-          "target-path": "client/<%= helpers.capitalize(name) %>/<%= helpers.capitalize(name) %>.js"
+          "target-path": "client/<%= name %>/<%= helpers.capitalize(name) %>.js"
         },
         {
           "blueprint-path": "config/blueprints/module/module-actions.ejs",
-          "target-path": "client/<%= helpers.capitalize(name) %>/<%= helpers.capitalize(name) %>Actions.js"
+          "target-path": "client/<%= name %>/<%= helpers.capitalize(name) %>Actions.js"
         },
         {
           "blueprint-path": "config/blueprints/module/module-reducer.ejs",
-          "target-path": "client/<%= helpers.capitalize(name) %>/<%= helpers.capitalize(name) %>Reducer.js"
+          "target-path": "client/<%= name %>/<%= helpers.capitalize(name) %>Reducer.js"
         },
         {
           "blueprint-path": "config/blueprints/module/module-styles.ejs",
-          "target-path": "client/<%= helpers.capitalize(name) %>/<%= helpers.capitalize(name) %>.css"
+          "target-path": "client/<%= name %>/<%= helpers.capitalize(name) %>.css"
         },
         {
           "blueprint-path": "config/blueprints/module/controller.ejs",
@@ -77,7 +55,7 @@
         },
         {
           "blueprint-path": "config/blueprints/module/model.ejs",
-          "target-path": "server/models/<%= name %>.js"
+          "target-path": "server/models/<%= name %>.model.js"
         }
       ]
     }
