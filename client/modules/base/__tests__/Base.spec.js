@@ -2,7 +2,7 @@ import React from 'react';
 import test from 'ava';
 import sinon from 'sinon';
 import { shallow, mount } from 'enzyme';
-import { App } from '../App';
+import { Base } from '../Base';
 import styles from '../Base.css';
 import { intlShape } from 'react-intl';
 import { intl } from '../../../util/react-intl-test-helper';
@@ -19,7 +19,7 @@ const props = {
 
 test('renders properly', t => {
   const wrapper = shallow(
-    <App {...props} />
+    <Base {...props} />
   );
 
   // t.is(wrapper.find('Helmet').length, 1);
