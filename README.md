@@ -123,7 +123,7 @@ etc-app
     └── services                    // apis
 ├── client                          // front
     ├── modules
-        ├── base                    // base stuff : authentification panel / navbar / sidebar / css base
+        ├── base                    // base stuff : navbar / sidebar / css base / shared components
             ├── __tests__           // unit tests
             ├── components          // react components
             ├── pages               // react pages
@@ -148,9 +148,35 @@ etc-app
 └── + files webpacks/docker/travis/divers.js
 ```
 
+## Naming
+
+### Client
+
+```
+./client/modules/posts/PostActions.js
+./client/modules/posts/PostReducer.js
+./client/modules/posts/Post.js
+./client/modules/posts/Post.css
+./client/modules/posts/components/PostComponent1/PostComponent1.js
+./client/modules/posts/components/PostComponent1/PostComponent1.css
+```
+
+### Server
+
+```
+./server/controllers/post.controller.js
+./server/models/post.model.js
+./server/routes/post.routes.js
+```
+
 # Warnings
 
+### Run
+
 There are warnings because we are using React < v16.0 because of MERN v2.
+
+### Client and Server Markup Mismatch
+This warning is visible only on development and totally harmless. This occurs to hash difference in `react-router`. To solve it, react router docs asks you to use `match` function. If we use `match`, `react-hot-reloader` stops working.
 
 
 # Files Generator
@@ -196,57 +222,21 @@ Here, notice the usage. In `<module-name>/<component-name>`, `<module-name>` wil
 ### Blueprint files
 Blueprints are basically [ejs](https://github.com/mde/ejs) templates which are rendered with the same three variables(`name`, optional `parent` and `helpers` object) as above.
 
-<!-- ## Client
+### Commands
 
-Client directory contains all the shared components, routes, modules.
+We can use `merng` command to generate module or components
 
-### components
-This folder contains all the common components which are used throughout the project.
+1. `merng dumb-m [component-name]` Generates a dumb react component in a module directory
 
-### index.js
-Index.js simply does client side rendering using the data provided from `window.__INITIAL_STATE__`.
+2. `merng functional-m [functional-component-name]` Generates a functional react component in a module directory
 
-### modules
-Modules are the way of organising different domain-specific modules in the project. A typical module contains the following
-```
-.
-└── Post
-    ├── __tests__                    // all the tests for this module goes here
-    |   ├── components               // Sub components of this module
-    |   |   ├── Post.spec.js
-    |   |   ├── PostList.spec.js
-    |   |   ├── PostItem.spec.js
-    |   |   └── PostImage.spec.js
-    |   ├── pages
-    |   |   ├── PostPage.spec.js
-    |   |   └── PostViewPage.spec.js
-    |   ├── PostReducer.spec.js
-    |   └── PostActions.spec.js
-    ├── components                   // Sub components of this module
-    |   ├── Post.js
-    |   ├── PostList.js
-    |   ├── PostItem.js
-    |   └── PostImage.js
-    ├── pages                        // React Router Pages from this module
-    |   ├── PostPage
-    |   |   ├── PostPage.js
-    |   |   └── PostPage.css
-    |   └── PostViewPage
-    |       ├── PostViewPage.js
-    |       └── PostViewPage.css
-    ├── PostReducer.js
-    └── PostActions.js
-```
+3. `merng module [module-name]` Generates a module including react components, reducer, action, style & express route, controller, model
 
 
-
-
+<!-- 
 ### Caveats
 
 #### FOUC (Flash of Unstyled Content)
 To make the hot reloading of CSS work, we are not extracting CSS in development. Ideally, during server rendering, we will be extracting CSS, and we will get a .css file, and we can use it in the html template. That's what we are doing in production.
 
-In development, after all scripts get loaded, react loads the CSS as BLOBs. That's why there is a second of FOUC in development.
-
-#### Client and Server Markup Mismatch
-This warning is visible only on development and totally harmless. This occurs to hash difference in `react-router`. To solve it, react router docs asks you to use `match` function. If we use `match`, `react-hot-reloader` stops working.
+In development, after all scripts get loaded, react loads the CSS as BLOBs. That's why there is a second of FOUC in development. -->
