@@ -79,9 +79,9 @@ Branch name must describe the feature purpose and can be anything except `master
 
 `git commit -m "commit message follwing commit message rules below"`
 
-A commit message must start with either `[back|front|all]` then must be followed by the feature relative name `(featureName)` and must be finished by a comment on the current feature status.
+A commit message must start with either `back|front|all` then must be followed by the topic name `(topic):` (can be the feature name) with colons and must be finished by a comment in **LOWERCASE** on the current topic status.
 
-Example: `[front](sass-integration) Adding a new style for user profile page`
+Example: `front(sass-integration): adding a new style for user profile page`
 
 ### Work done
 
