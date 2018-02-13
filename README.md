@@ -1,6 +1,10 @@
 
 # Preset
 
+## Continous Integration
+
+[![Build Status](https://travis-ci.org/eco-transports-campus/app.svg?branch=master)](https://travis-ci.org/eco-transports-campus/app)
+
 ## MongoDB
 
 For MongoDB installation guide see https://docs.mongodb.org/v3.0/installation/
