@@ -31,9 +31,9 @@ test('renders properly', t => {
 });
 
 test('calls componentDidMount', t => {
-  sinon.spy(App.prototype, 'componentDidMount');
+  sinon.spy(Base.prototype, 'componentDidMount');
   mount(
-    <App {...props} />,
+    <Base {...props} />,
     {
       context: {
         router: {
@@ -55,13 +55,13 @@ test('calls componentDidMount', t => {
     },
   );
 
-  t.truthy(App.prototype.componentDidMount.calledOnce);
-  App.prototype.componentDidMount.restore();
+  t.truthy(Base.prototype.componentDidMount.calledOnce);
+  Base.prototype.componentDidMount.restore();
 });
 
 test('calling toggleAddPostSection dispatches toggleAddPost', t => {
   const wrapper = shallow(
-    <App {...props} />
+    <Base {...props} />
   );
 
   wrapper.instance().toggleAddPostSection();
