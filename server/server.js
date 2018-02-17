@@ -11,6 +11,7 @@ import config from '../webpack.config.dev';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
+
 // Initialize the Express App
 const app = new Express();
 
@@ -37,8 +38,10 @@ import Helmet from 'react-helmet';
 import routes from '../client/routes';
 import { fetchComponentData } from './util/fetchData';
 import posts from './routes/post.routes';
+import cas from './routes/cas.route'
 import dummyData from '../config/mocks/dummyData';
 import serverConfig from './config';
+
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
@@ -60,6 +63,7 @@ app.use(bodyParser.json({ limit: '20mb' }));
 app.use(bodyParser.urlencoded({ limit: '20mb', extended: false }));
 app.use(Express.static(path.resolve(__dirname, '../dist/client')));
 app.use('/api', posts);
+app.use('/cas',cas)
 
 // Render Initial HTML
 const renderFullPage = (html, initialState) => {
@@ -151,3 +155,4 @@ app.listen(serverConfig.port, (error) => {
 });
 
 export default app;
+ 
