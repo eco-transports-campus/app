@@ -1,10 +1,29 @@
-.header {
-  background: #eee url('../../img/header-bk.png') center;
-  background-size: cover;
-  border-bottom: 1px solid #ccc;
+/* .header {
+} */
+
+svg {
+  color: #FAFAFA !important;
 }
 
-.content {
+.appBarStyle {
+  background: #546E7A !important;
+}
+
+.menuItem div div {
+  line-height: 48px !important;
+  text-decoration: none !important;
+}
+
+.menuTopic {
+  line-height: 48px !important;
+  background: lightgray;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* .content {
   width: 100%;
   max-width: 980px;
   margin: auto;
@@ -65,4 +84,4 @@
     float: left;
     margin-top: 16px;
   }
-}
+} */

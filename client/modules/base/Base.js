@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 // Import Style
 import styles from './Base.css';
+import headerStyles from './components/Header/Header.css';
+import { Route, IndexRoute } from 'react-router';
 
 // Import Components
 import Helmet from 'react-helmet';
@@ -10,23 +12,19 @@ import DevTools from './components/DevTools';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 
+import { Router, browserHistory } from 'react-router';
+import About from './pages/AboutPage/AboutPage';
+
 // Import Actions
-import { toggleAddPost } from './BaseActions';
+// import { toggleAddPost } from './BaseActions';
 import { switchLanguage } from '../intl/IntlActions';
+
 
 export class Base extends Component {
   constructor(props) {
     super(props);
     this.state = { isMounted: false };
   }
-
-  componentDidMount() {
-    this.setState({isMounted: true}); // eslint-disable-line
-  }
-
-  toggleAddPostSection = () => {
-    this.props.dispatch(toggleAddPost());
-  };
 
   render() {
     return (
@@ -48,15 +46,12 @@ export class Base extends Component {
               },
             ]}
           />
-          <Header
-            switchLanguage={lang => this.props.dispatch(switchLanguage(lang))}
-            intl={this.props.intl}
-            toggleAddPost={this.toggleAddPostSection}
-          />
+
+          <Header className={headerStyles.header} />
+
           <div className={styles.container}>
             {this.props.children}
           </div>
-          <Footer />
         </div>
       </div>
     );
@@ -64,8 +59,6 @@ export class Base extends Component {
 }
 
 Base.propTypes = {
-  children: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
   intl: PropTypes.object.isRequired,
 };
 

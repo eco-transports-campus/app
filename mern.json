@@ -7,7 +7,7 @@
       "files": [
         {
           "blueprint-path": "config/blueprints/dumb-component.ejs",
-          "parent-path": "client/<%= helpers.capitalize(parent) %>",
+          "parent-path": "client/modules/<%= parent %>",
           "target-path": "components/<%= helpers.capitalize(name) %>/<%= helpers.capitalize(name) %>.js"
         }
       ]
@@ -19,7 +19,7 @@
       "files": [
         {
           "blueprint-path": "config/blueprints/functional-component.ejs",
-          "parent-path": "client/<%= helpers.capitalize(parent) %>",
+          "parent-path": "client/modules/<%= parent %>",
           "target-path": "components/<%= helpers.capitalize(name) %>/<%= helpers.capitalize(name) %>.js"
         }
       ]
