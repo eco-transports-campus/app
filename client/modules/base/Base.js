@@ -117,6 +117,9 @@ export class Base extends Component {
             </div>
           </div>
         </div>
+
+
+        </div>
       </div>
     );
   }
