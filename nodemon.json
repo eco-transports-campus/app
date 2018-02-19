@@ -7,7 +7,6 @@
   "verbose": true,
   "watch": [
     "server",
-    "client",
     "config"
   ],
   "env": {
