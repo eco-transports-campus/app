@@ -5,6 +5,8 @@ import { Link } from 'react-router';
 // MaterialUI
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
+
+// MaterialUI Components
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
 // MaterialUI Ions
@@ -13,8 +15,8 @@ import InboxIcon from 'material-ui-icons/MoveToInbox';
 import StarIcon from 'material-ui-icons/Star';
 
 // Style
-import { styles } from './DrawerContentStyle';
- 
+import { styles } from './DrawerContentStyle'; 
+
 
 class DrawerContent extends Component {
 	constructor(props) {
