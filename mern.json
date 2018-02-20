@@ -1,26 +1,43 @@
 {
   "blueprints": [
     {
-      "name": "dumb-m",
-      "description": "Generates a dumb react component in a module directory",
-      "usage": "dumb-m <module-name>/<component-name>",
+      "name": "component",
+      "description": "Generates a classic react component in a module directory",
+      "usage": "component <module-name>/<component-name>",
       "files": [
         {
-          "blueprint-path": "config/blueprints/dumb-component.ejs",
+          "blueprint-path": "config/blueprints/component/component.ejs",
           "parent-path": "client/modules/<%= parent %>",
           "target-path": "components/<%= helpers.capitalize(name) %>/<%= helpers.capitalize(name) %>.js"
         }
       ]
     },
     {
-      "name": "functional-m",
-      "description": "Generates a functional react component in a module directory",
-      "usage": "functional-m <module-name>/<component-name>",
+      "name": "component-ws",
+      "description": "Generates a classic react component with style set up in a module directory",
+      "usage": "component-ws <module-name>/<component-name>",
       "files": [
         {
-          "blueprint-path": "config/blueprints/functional-component.ejs",
+          "blueprint-path": "config/blueprints/component/component-withstyles.ejs",
           "parent-path": "client/modules/<%= parent %>",
           "target-path": "components/<%= helpers.capitalize(name) %>/<%= helpers.capitalize(name) %>.js"
+        },
+        {
+          "blueprint-path": "config/blueprints/component/style.ejs",
+          "parent-path": "client/modules/<%= parent %>",
+          "target-path": "components/<%= helpers.capitalize(name) %>/<%= helpers.capitalize(name) %>Style.js"
+        }
+      ]
+    },
+    {
+      "name": "component-f",
+      "description": "Generates a functional react component in a module directory",
+      "usage": "component-f <module-name>/<component-name>",
+      "files": [
+        {
+          "blueprint-path": "config/blueprints/component/functional-component.ejs",
+          "parent-path": "client/modules/<%= parent %>",
+          "target-path": "components/<%= helpers.capitalize(name) %>.js"
         }
       ]
     },
