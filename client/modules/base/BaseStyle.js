@@ -45,8 +45,12 @@ export const styles = theme => ({
       paddingLeft: 240,
     },
   },
-  typo :{
+  typo: {
     flex: 1,
     paddingLeft: 20,
+  },
+  appBarButton: {
+    textDecoration: 'none',
+    color: 'white'
   }
 });
