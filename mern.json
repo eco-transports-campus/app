@@ -44,7 +44,7 @@
     {
       "name": "module",
       "description": "Generates a module including react components, reducer, action, style & express route, controller, model",
-      "usage": "module [module-name]",
+      "usage": "module <module-name>",
       "files": [
         {
           "blueprint-path": "config/blueprints/module/module.ejs",
