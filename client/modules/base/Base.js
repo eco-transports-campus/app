@@ -9,8 +9,9 @@ import { withStyles } from 'material-ui/styles';
 // Import Components
 import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
+import DrawerContent from './components/DrawerContent/DrawerContent';
 
-import { Router, browserHistory, Link } from 'react-router';
+import { Router, browserHistory } from 'react-router';
 
 // MaterialUI stuff
 import Drawer from 'material-ui/Drawer';
@@ -23,13 +24,9 @@ import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-
 
 // MaterialUI Icons
 import QuestionAnswerIcon from 'material-ui-icons/QuestionAnswer';
-import InboxIcon from 'material-ui-icons/MoveToInbox';
-import StarIcon from 'material-ui-icons/Star';
 import MailIcon from 'material-ui-icons/Mail';
 import DeleteIcon from 'material-ui-icons/Delete';
 import ReportIcon from 'material-ui-icons/Report';
@@ -38,8 +35,6 @@ import ExpandMoreIcon from 'material-ui-icons/Dehaze';
 
 // Import Actions
 // import { } from './BaseActions';
-
-const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
@@ -57,7 +52,7 @@ const styles = theme => ({
   },
   appBar: {
     position: 'fixed',
-    marginLeft: drawerWidth,
+    marginLeft: 240,
     width: '100%',
     zIndex: 1500,
   },
@@ -66,11 +61,10 @@ const styles = theme => ({
       display: 'none',
     },
   },
-  drawerHeader: theme.mixins.toolbar,
   drawerPaper: {
     width: 250,
     [theme.breakpoints.up('md')]: {
-      width: drawerWidth,
+      width: 240,
       position: 'fixed',
       height: '100vh',
     },
@@ -86,16 +80,13 @@ const styles = theme => ({
       marginTop: 64,
     },
     [theme.breakpoints.up('md')]: {
-      paddingLeft: drawerWidth,
+      paddingLeft: 240,
     },
   },
   typo :{
     flex: 1,
     paddingLeft: 20,
   },
-  menuItems: {
-    textDecoration: 'none',
-  }
 });
 
 export class Base extends Component {
@@ -111,7 +102,6 @@ export class Base extends Component {
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
-
 
   render() {
     const { classes } = this.props;
@@ -137,97 +127,50 @@ export class Base extends Component {
           />
 
           <div className={classes.appFrame}>
-          <AppBar className={classes.appBar}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={this.handleDrawerToggle}
-                className={classes.navIconHide}
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-              <Typography className={classes.typo} variant="title" color="inherit" noWrap>
-                ETC
-              </Typography>
+            <AppBar className={classes.appBar}>
+              <Toolbar>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={this.handleDrawerToggle}
+                  className={classes.navIconHide}
+                >
+                  <ExpandMoreIcon />
+                </IconButton>
+                <Typography className={classes.typo} variant="title" color="inherit" noWrap>
+                  ETC
+                </Typography>
 
-              <IconButton color="inherit">
-                <QuestionAnswerIcon />
-              </IconButton>
-              <IconButton color="inherit">
-                <FeedbackIcon />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
+                <IconButton color="inherit">
+                  <QuestionAnswerIcon />
+                </IconButton>
+                <IconButton color="inherit">
+                  <FeedbackIcon />
+                </IconButton>
+              </Toolbar>
+            </AppBar>
 
-          <Hidden mdUp>
-            <Drawer variant="temporary" open={this.state.mobileOpen} classes={{paper: classes.drawerPaper }} onClose={this.handleDrawerToggle} 
-            ModalProps={{keepMounted: true, 
-              // Better open performance on mobile.
-            }}>
-              <div className={classes.drawerHeader} />
-              <div>
-                <Link to="/about" className = {classes.menuItems}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="About" />
-                  </ListItem>
-                </Link>
+            <Hidden mdUp>
+              <Drawer variant="temporary" open={this.state.mobileOpen} classes={{paper: classes.drawerPaper}} onClose={this.handleDrawerToggle} ModalProps={{keepMounted: true, }}>
+                <DrawerContent />
+              </Drawer>
+            </Hidden>
 
-                <Link to="/posts" className = {classes.menuItems}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Posts" />
-                  </ListItem>
-                </Link>
-              </div>
-            </Drawer>
-          </Hidden>
+            <Hidden smDown implementation="css">
+              <Drawer variant="permanent" classes={{paper: classes.drawerPaper}}>
+                <DrawerContent />
+              </Drawer>
+            </Hidden>
 
-          <Hidden smDown implementation="css">
-            <Drawer variant="permanent" classes={{ paper: classes.drawerPaper, }}>
-              <div className={classes.drawerHeader} />
-              <div>
-                <Link to="/about" className = {classes.menuItems}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <InboxIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="About" />
-                  </ListItem>
-                </Link>
-
-                <Link to="/posts" className = {classes.menuItems}>
-                  <ListItem button>
-                    <ListItemIcon>
-                      <StarIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Posts" />
-                  </ListItem>
-                </Link>
-              </div>
-            </Drawer>
-          </Hidden>
-
-          <div className={classes.content}>
-            {this.props.children}
+            <div className={classes.content}>
+              {this.props.children}
+            </div>
           </div>
-        </div>
-
-
         </div>
       </div>
     );
   }
 }
-
-Base.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 Base.propTypes = {
   classes: PropTypes.object.isRequired,
