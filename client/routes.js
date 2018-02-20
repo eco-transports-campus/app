@@ -6,6 +6,7 @@ import { Route, IndexRoute } from 'react-router';
 // Pages
 import Base from './modules/base/Base';
 import About from './modules/base/pages/AboutPage/AboutPage';
+import Sample from './modules/base/pages/SamplePage/SamplePage';
 
 // require.ensure polyfill for node
 if (typeof require.ensure !== 'function') {
@@ -28,10 +29,9 @@ if (process.env.NODE_ENV !== 'production') {
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
 export default (
   <Route path="/" component={Base}>
-    {/* Base Routing */}
+    <Route path="/sample" component={Sample}/>
     <Route path="/about" component={About}/>
 
-    {/* Sample Routing */}
     <Route path="/posts"       
       getComponent={(nextState, cb) => {
         require.ensure([], require => {

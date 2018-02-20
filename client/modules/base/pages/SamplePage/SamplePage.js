@@ -2,30 +2,32 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 
-// MaterialUI
-import classNames from 'classnames';
+// MaterialUI Stuff
 import { withStyles } from 'material-ui/styles';
 
 // Style
-import { styles } from './AboutPageStyle'; 
+import { styles } from './SamplePageStyle';
 
 
-class AboutPage extends Component {
+class SamplePage extends Component {
+  constructor(props) {
+    super(props);
+	}
+
   render() {
     const { classes } = this.props;
 
     return (
       <div>
-          <Helmet title="About" />
-          Blabla Polytech APP5
+        <Helmet title="Sample" />
+        Sample page - TODO
       </div>
     );
   }
 }
 
-AboutPage.propTypes = {
+SamplePage.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AboutPage);
-
+export default withStyles(styles)(SamplePage);
