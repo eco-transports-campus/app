@@ -42,6 +42,23 @@
       ]
     },
     {
+      "name": "page",
+      "description": "Generates a page in a module directory",
+      "usage": "page <module-name>/<page-name>",
+      "files": [
+        {
+          "blueprint-path": "config/blueprints/page/page.ejs",
+          "parent-path": "client/modules/<%= parent %>",
+          "target-path": "pages/<%= helpers.capitalize(name) %>Page/<%= helpers.capitalize(name) %>Page.js"
+        },
+        {
+          "blueprint-path": "config/blueprints/page/style.ejs",
+          "parent-path": "client/modules/<%= parent %>",
+          "target-path": "pages/<%= helpers.capitalize(name) %>Page/<%= helpers.capitalize(name) %>PageStyle.js"
+        }
+      ]
+    },
+    {
       "name": "module",
       "description": "Generates a module including react components, reducer, action, style & express route, controller, model",
       "usage": "module <module-name>",
