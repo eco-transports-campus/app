@@ -1,5 +1,6 @@
 // React
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 
 // MaterialUI
 import classNames from 'classnames';
@@ -14,11 +15,8 @@ import IconButton from 'material-ui/IconButton';
 import Hidden from 'material-ui/Hidden';
 
 // MaterialUI Icons
-import QuestionAnswerIcon from 'material-ui-icons/QuestionAnswer';
+import NotificationsIcon from 'material-ui-icons/Notifications';
 import MailIcon from 'material-ui-icons/Mail';
-import DeleteIcon from 'material-ui-icons/Delete';
-import ReportIcon from 'material-ui-icons/Report';
-import FeedbackIcon from 'material-ui-icons/Feedback';
 import ExpandMoreIcon from 'material-ui-icons/Dehaze';
 
 // Style
@@ -45,6 +43,10 @@ export class Base extends Component {
 
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
+  };
+
+  handleDrawerClose = () => {
+    this.setState({ mobileOpen: false });
   };
 
   render() {
@@ -85,17 +87,21 @@ export class Base extends Component {
                   ETC
                 </Typography>
 
-                <IconButton color="inherit">
-                  <QuestionAnswerIcon />
-                </IconButton>
-                <IconButton color="inherit">
-                  <FeedbackIcon />
-                </IconButton>
+                <Link to="/sample" className = {classes.appBarButton}>
+                  <IconButton color="inherit">
+                    <NotificationsIcon />
+                  </IconButton>
+                </Link>
+                <Link to="/sample" className = {classes.appBarButton}>
+                  <IconButton color="inherit">
+                    <MailIcon />
+                  </IconButton>
+                </Link>
               </Toolbar>
             </AppBar>
 
             <Hidden mdUp>
-              <Drawer variant="temporary" open={this.state.mobileOpen} classes={{paper: classes.drawerPaper}} onClose={this.handleDrawerToggle} ModalProps={{keepMounted: true, }}>
+              <Drawer variant="temporary" open={this.state.mobileOpen} classes={{paper: classes.drawerPaper}} onClick={this.handleDrawerClose} onClose={this.handleDrawerToggle} ModalProps={{keepMounted: true, }}>
                 <DrawerContent />
               </Drawer>
             </Hidden>
