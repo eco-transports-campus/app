@@ -1,18 +1,31 @@
-import React, { PropTypes } from 'react';
+// React
+import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
-// import { FormattedMessage } from 'react-intl';
 
-// Import Style
-// import styles from './AboutPage.css';
+// MaterialUI
+import classNames from 'classnames';
+import { withStyles } from 'material-ui/styles';
+
+// Style
+import { styles } from './AboutPageStyle'; 
 
 
-export function AboutPage(props) {
-  return (
-    <div>
-        <Helmet title="About" />
-        AboutPage
-    </div>
-  );
+class AboutPage extends Component {
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div>
+          <Helmet title="About" />
+          AboutPage
+      </div>
+    );
+  }
 }
 
-export default AboutPage;
+AboutPage.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(AboutPage);
+
