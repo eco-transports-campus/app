@@ -56,7 +56,7 @@
     ```
 - Import lodash functions as module, no global `_`
 
-## Git process
+## Git process with rebase strategy
 
 Branches names based on [gitflow](https://github.com/nvie/gitflow) model, explained in details [here](http://nvie.com/posts/a-successful-git-branching-model/)
 
@@ -67,13 +67,21 @@ Branches names based on [gitflow](https://github.com/nvie/gitflow) model, explai
 
 ### Start working
 
+*Go on develop branch and get the last updates*
+
+`git checkout develop`
+
+`git pull`
+
+*Create your branch from develop*
+
 `git checkout -b feature/my-feature develop`
 
 Branch name must describe the feature purpose and can be anything except `master`, `develop`, `release-*`, or `hotfix-*`
 
 ### Work in progress
 
-`git pull`
+*Add your work on your branch*
 
 `git add filesName`
 
@@ -85,10 +93,28 @@ Example: `front(sass-integration): adding a new style for user profile page`
 
 ### Work done
 
+*Update your local repository*
+
+`git fetch origin`
+
+*Put your work on top of the develop branch*
+
+`git rebase develop`
+
+*Update the develop branch*
+
 `git checkout develop`
 
-`git merge --no-ff myFeature`
+`git pull`
 
-`git branch -d feature/myFeature`
+*Pull your work over the develop branch*
 
-`git push origin develop`
+`git rebase feature/my-feature`
+
+*Push your work by starting a pull request*
+
+`git push`
+
+*Delete the merged feature branch*
+
+`git branch -d feature/my-feature`
