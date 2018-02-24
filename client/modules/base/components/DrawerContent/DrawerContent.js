@@ -36,7 +36,7 @@ class DrawerContent extends Component {
 			<div>
 				<div className={classes.drawerHeader} />
 				<div>
-					<Link to="/sample" className = {classes.menuItems}>
+					<Link to="/home" className = {classes.menuItems}>
 						<ListItem button>
 							<ListItemIcon>
 								<HomeIcon />
@@ -71,6 +71,15 @@ class DrawerContent extends Component {
 								<TransferWithinAStationIcon />
 							</ListItemIcon>
 							<ListItemText primary="Demander un trajet" />
+						</ListItem>
+					</Link>
+
+					<Link to="/sample" className = {classes.menuItems}>
+						<ListItem button>
+							<ListItemIcon>
+								<StarIcon />
+							</ListItemIcon>
+							<ListItemText primary="Recommandations" />
 						</ListItem>
 					</Link>
 
