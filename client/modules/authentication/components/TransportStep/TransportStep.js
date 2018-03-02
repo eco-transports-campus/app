@@ -105,7 +105,9 @@ class TransportStep extends Component {
 
 TransportStep.propTypes = {
   classes: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  onOwnVehiclesChange: PropTypes.func.isRequired,
+  onCommunityTransportsChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(TransportStep);

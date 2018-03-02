@@ -9,9 +9,6 @@ import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 
-// TODO remove
-import Input from 'material-ui/Input';
-
 // Components
 import InfoStep from '../../components/InfoStep/InfoStep';
 import TransportStep from '../../components/TransportStep/TransportStep';
@@ -38,13 +35,13 @@ class SignUpPage extends Component {
       user: {
         mail: '',
         ownVehicles: [],
-        comTransports: []
+        comTransports: [],
+        travels: []
       }
     };
   }
 
   isNextButtonDisabled = () => {
-    console.log(this.state.activeStep);
     let tmpChoice = true;
 
     switch (this.state.activeStep) {
@@ -54,9 +51,8 @@ class SignUpPage extends Component {
         break;
       default: tmpChoice = true;
     }
-    
-    console.log(tmpChoice);
-    this.handleNextButton(tmpChoice);
+
+    this.handleNextButton(false);
   }
 
   handleMailChange = (_mail) => {
@@ -65,7 +61,7 @@ class SignUpPage extends Component {
         ...this.state.user,
         mail: _mail
       }
-    }, () => this.isNextButtonDisabled());
+    });
   }
 
   handleOwnVehiclesChange = (_ownVehicles) => {
@@ -85,11 +81,20 @@ class SignUpPage extends Component {
       } 
     }, () => this.isNextButtonDisabled());
   }
-  
+
+  handleTravelsChange = (_travels) => {
+    this.setState({
+      user: {
+        ...this.state.user,
+        travels: _travels
+      }
+    }, () => this.isNextButtonDisabled());
+  }
+
   getSteps = () => {
     return ['Valider vos informations', 'Ajouter vos modes de déplacement', 'Ajouter vos trajets', 'Régler vos préférences de notification', 'Activer votre compte'];
   };
-  
+
   getStepContent = (step) => {
     switch (step) {
       case 0:
@@ -104,7 +109,8 @@ class SignUpPage extends Component {
           onCommunityTransportsChange={this.handleCommunityTransportsChange} />;
       case 2:
         return <TravelStep 
-          user={this.state.user} />;
+          user={this.state.user}
+          onTravelsChange={this.handleTravelsChange} />;
       case 3:
         return <NotifStep />;
       case 4:

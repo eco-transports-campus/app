@@ -6,7 +6,6 @@ import { withStyles } from 'material-ui/styles';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 
-
 // Style
 import { styles } from './InfoStepStyle';
 
@@ -81,11 +80,11 @@ class InfoStep extends Component {
   }
 }
 
-// TODO function callback ?
 InfoStep.propTypes = {
   classes: PropTypes.object.isRequired,
   userFromCAS: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
+  onMailChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(InfoStep);
