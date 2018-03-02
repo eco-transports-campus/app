@@ -34,24 +34,29 @@ class SignUpPage extends Component {
 
     this.state = {
       activeStep: 0,
-      disabledStep: true,
+      disabledStep: false,
       user: {
         mail: '',
         ownVehicles: [],
         comTransports: []
       }
     };
-
-    this.state.disabledStep = this.isNextButtonDisabled();
   }
 
   isNextButtonDisabled = () => {
     console.log(this.state.activeStep);
-    if (this.state.activeStep === 0) return false;
-    if (this.state.activeStep === 1) {
-      if(this.state.user.ownVehicles.length !== 0 || this.state.user.comTransports.length !== 0) return false;
-    } 
-    // return true;
+    let tmpChoice = true;
+
+    switch (this.state.activeStep) {
+      case 0: tmpChoice = false;
+        break;
+      case 1: tmpChoice = (this.state.user.ownVehicles.length === 0 && this.state.user.comTransports.length === 0);
+        break;
+      default: tmpChoice = true;
+    }
+    
+    console.log(tmpChoice);
+    this.handleNextButton(tmpChoice);
   }
 
   handleMailChange = (_mail) => {
@@ -59,34 +64,26 @@ class SignUpPage extends Component {
       user: {
         ...this.state.user,
         mail: _mail
-      } 
-    });
-
-    console.log(this.state);
+      }
+    }, () => this.isNextButtonDisabled());
   }
 
   handleOwnVehiclesChange = (_ownVehicles) => {
     this.setState({
-      disabledStep: this.isNextButtonDisabled(),
       user: {
         ...this.state.user,
         ownVehicles: _ownVehicles
       } 
-    });
-
-    console.log(this.state);
+    }, () => this.isNextButtonDisabled());
   }
 
   handleCommunityTransportsChange = (_comTransports) => {
     this.setState({
-      disabledStep: this.isNextButtonDisabled(),
       user: {
         ...this.state.user,
         comTransports: _comTransports
       } 
-    });
-
-    console.log(this.state);
+    }, () => this.isNextButtonDisabled());
   }
   
   getSteps = () => {
@@ -117,25 +114,28 @@ class SignUpPage extends Component {
     }
   };
 
+  handleNextButton = (val) => {
+    this.setState({
+      disabledStep: val
+    });
+  }
+
   handleNext = () => {
     this.setState({
-      activeStep: this.state.activeStep + 1,
-      disabledStep: this.isNextButtonDisabled()
-    });
+      activeStep: this.state.activeStep + 1
+    }, () => this.isNextButtonDisabled());
   };
 
   handleBack = () => {
     this.setState({
-      activeStep: this.state.activeStep - 1,
-      disabledStep: this.isNextButtonDisabled()
-    });
+      activeStep: this.state.activeStep - 1
+    }, () => this.isNextButtonDisabled());
   };
 
   handleReset = () => {
     this.setState({
-      activeStep: 0,
-      disabledStep: this.isNextButtonDisabled()
-    });
+      activeStep: 0
+    }, () => this.isNextButtonDisabled());
   };
 
   render() {

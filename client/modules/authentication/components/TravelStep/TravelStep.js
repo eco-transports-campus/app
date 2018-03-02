@@ -17,7 +17,9 @@ class TravelStep extends Component {
     const { classes } = this.props;
 
     return (
-      <div>  </div>
+      <div>  
+        
+      </div>
     );
   }
 }
