@@ -1,79 +1,137 @@
+// React
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
-// Import Style
-import styles from './Base.css';
+// MaterialUI
+import classNames from 'classnames';
+import { withStyles } from 'material-ui/styles';
 
-// Import Components
+// MaterialUI Components
+import Drawer from 'material-ui/Drawer';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
+import Hidden from 'material-ui/Hidden';
+
+// MaterialUI Icons
+import NotificationsIcon from 'material-ui-icons/Notifications';
+import MailIcon from 'material-ui-icons/Mail';
+import ExpandMoreIcon from 'material-ui-icons/Dehaze';
+
+// Style
+import { styles } from './BaseStyle';
+
+// Components
 import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+import DrawerContent from './components/DrawerContent/DrawerContent';
 
-// Import Actions
-import { toggleAddPost } from './BaseActions';
-import { switchLanguage } from '../intl/IntlActions';
+// Page
+import LandingPage from './pages/LandingPage/LandingPage';
+
+// Actions
+// import { } from './BaseActions';
 
 export class Base extends Component {
   constructor(props) {
     super(props);
-    this.state = { isMounted: false };
+
+    this.state = { 
+      sMounted: false,
+      isLoggedIn: true,
+      mobileOpen: false
+    };
   }
 
-  componentDidMount() {
-    this.setState({isMounted: true}); // eslint-disable-line
-  }
+  handleDrawerToggle = () => {
+    this.setState({ mobileOpen: !this.state.mobileOpen });
+  };
 
-  toggleAddPostSection = () => {
-    this.props.dispatch(toggleAddPost());
+  handleDrawerClose = () => {
+    this.setState({ mobileOpen: false });
   };
 
   render() {
-    return (
-      <div>
-        {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
+    const { classes } = this.props;
+
+    if (this.state.isLoggedIn) {
+      return (
         <div>
-          <Helmet
-            title="ETC App"
-            titleTemplate="%s - ETC App"
-            meta={[
-              { charset: 'utf-8' },
-              {
-                'http-equiv': 'X-UA-Compatible',
-                content: 'IE=edge',
-              },
-              {
-                name: 'viewport',
-                content: 'width=device-width, initial-scale=1',
-              },
-            ]}
-          />
-          <Header
-            switchLanguage={lang => this.props.dispatch(switchLanguage(lang))}
-            intl={this.props.intl}
-            toggleAddPost={this.toggleAddPostSection}
-          />
-          <div className={styles.container}>
-            {this.props.children}
+          {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
+          <div>
+            <Helmet
+              title="ETC App"
+              titleTemplate="%s - ETC App"
+              meta={[
+                { charset: 'utf-8' },
+                {
+                  'http-equiv': 'X-UA-Compatible',
+                  content: 'IE=edge',
+                },
+                {
+                  name: 'viewport',
+                  content: 'width=device-width, initial-scale=1',
+                },
+              ]}
+            />
+  
+            <div className={classes.appFrame}>
+              <AppBar className={classes.appBar}>
+                <Toolbar>
+                  <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    onClick={this.handleDrawerToggle}
+                    className={classes.navIconHide}
+                  >
+                    <ExpandMoreIcon />
+                  </IconButton>
+                  <Typography className={classes.typo} variant="title" color="inherit" noWrap>
+                    ETC
+                  </Typography>
+  
+                  <Link to="/sample" className = {classes.appBarButton}>
+                    <IconButton color="inherit">
+                      <NotificationsIcon />
+                    </IconButton>
+                  </Link>
+                  <Link to="/sample" className = {classes.appBarButton}>
+                    <IconButton color="inherit">
+                      <MailIcon />
+                    </IconButton>
+                  </Link>
+                </Toolbar>
+              </AppBar>
+  
+              <Hidden mdUp>
+                <Drawer variant="temporary" open={this.state.mobileOpen} classes={{paper: classes.drawerPaper}} onClick={this.handleDrawerClose} onClose={this.handleDrawerToggle} ModalProps={{keepMounted: true, }}>
+                  <DrawerContent />
+                </Drawer>
+              </Hidden>
+  
+              <Hidden smDown implementation="css">
+                <Drawer variant="permanent" classes={{paper: classes.drawerPaper}}>
+                  <DrawerContent />
+                </Drawer>
+              </Hidden>
+  
+              <div className={classes.content}>
+                {this.props.children}
+              </div>
+            </div>
           </div>
-          <Footer />
         </div>
-      </div>
-    );
+      );
+    } else {
+      return <LandingPage />
+    }
+
   }
 }
 
 Base.propTypes = {
-  children: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  intl: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
-// Retrieve data from store as props
-function mapStateToProps(store) {
-  return {
-    intl: store.intl,
-  };
-}
-
-export default connect(mapStateToProps)(Base);
+export default withStyles(styles)(Base);

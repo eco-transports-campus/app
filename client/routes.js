@@ -1,7 +1,12 @@
 /* eslint-disable global-require */
+// React
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
+
+// Pages
 import Base from './modules/base/Base';
+import About from './modules/base/pages/AboutPage/AboutPage';
+import Sample from './modules/base/pages/SamplePage/SamplePage';
 
 // require.ensure polyfill for node
 if (typeof require.ensure !== 'function') {
@@ -24,20 +29,15 @@ if (process.env.NODE_ENV !== 'production') {
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
 export default (
   <Route path="/" component={Base}>
-    <IndexRoute
+    <Route path="/sample" component={Sample}/>
+    <Route path="/about" component={About}/>
+
+    <Route path="/posts"       
       getComponent={(nextState, cb) => {
         require.ensure([], require => {
           cb(null, require('./modules/posts/pages/PostListPage/PostListPage').default);
         });
-      }}
-    />
-    <Route
-      path="/posts/:slug-:cuid"
-      getComponent={(nextState, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./modules/posts/pages/PostDetailPage/PostDetailPage').default);
-        });
-      }}
+      }} 
     />
   </Route>
 );
