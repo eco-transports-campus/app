@@ -5,7 +5,7 @@ import {
   SWITCH_LANGUAGE,
   switchLanguage,
 } from '../IntlActions';
-import { localizationData } from '../../../../Intl/setup';
+import { localizationData } from '../setup';
 
 const lang = 'en';
 

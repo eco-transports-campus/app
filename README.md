@@ -1,6 +1,10 @@
 
 # Preset
 
+## Continous Integration
+
+[![Build Status](https://travis-ci.org/eco-transports-campus/app.svg?branch=master)](https://travis-ci.org/eco-transports-campus/app)
+
 ## MongoDB
 
 For MongoDB installation guide see https://docs.mongodb.org/v3.0/installation/
@@ -88,8 +92,6 @@ We use React Router's match function for handling all page requests so that brow
 
 All the routes are defined in `client/routes.js`. React Router renders components according to route requested.
 
-
-
 `match` takes two parameters, first is an object that contains routes, location and history and second is a callback function which is called when routes have been matched to a location.
 
 If there's an error in matching we return 500 status code, if no matches are found we return 404 status code. If a match is found then, we need to create a new Redux Store instance.
@@ -98,9 +100,40 @@ If there's an error in matching we return 500 status code, if no matches are fou
 
 `fetchComponentData` is the essential function. It takes three params: first is a dispatch function of Redux store, the second is an array of components that should be rendered in current route and third is the route params. `fetchComponentData` collects all the needs (need is an array of actions that are required to be dispatched before rendering the component) of components in the current route. It returns a promise when all the required actions are dispatched. We render the page and send data to the client for client-side rendering in `window.__INITIAL_STATE__`.
 
+**Note: We are using `react-router` v2 which is quite old, we should evolve for v4 but the rendering system has been totally changed. It could be pretty tough to refacto. See : https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/migrating.md#link**
+
 ## ES6 support
 
 We use babel to transpile code in both server and client with `stage-0` plugin. So, you can use both ES6 and experimental ES7 features.
+
+## Front
+
+### CSS
+#### MaterialUI 
+
+MarerialUI v1.0.0 is still in beta but there are so much more features than the v0.20.0 one. 
+
+Lib : `material-ui` 
+
+Latest version doc : https://material-ui-next.com/
+
+#### Icons
+
+For icons we use MaterialUI Icons. 
+
+Lib : `material-ui-icons`
+
+Doc : https://material.io/icons/
+
+### React
+
+The React doc is good, I recommand you to read and try some examples to understand how this works : https://reactjs.org/tutorial/tutorial.html
+
+### ES6
+
+If you are new with ES6 you can read the doc from Mozilla : https://developer.mozilla.org/fr/docs/Web/JavaScript/Nouveaut%C3%A9s_et_historique_de_JavaScript/Support_ECMAScript_2015_par_Mozilla
+
+Also you can try to follow a this useful tutorial : http://ccoenraets.github.io/es6-tutorial/
 
 # File Structure
 
@@ -156,9 +189,10 @@ etc-app
 ./client/modules/posts/PostActions.js
 ./client/modules/posts/PostReducer.js
 ./client/modules/posts/Post.js
-./client/modules/posts/Post.css
+./client/modules/posts/PostStyle.js
 ./client/modules/posts/components/PostComponent1/PostComponent1.js
-./client/modules/posts/components/PostComponent1/PostComponent1.css
+./client/modules/posts/components/PostComponent1/PostComponent1Style.js
+./client/modules/posts/components/PostComponentFunctional.js
 ```
 
 ### Server
@@ -204,15 +238,15 @@ An example blueprint config
 
 ```
 {
-    "name": "dumb-m",
-    "description": "Generates a dumb react component in a module directory",
-    "usage": "dumb-m <module-name>/<component-name>",
+    "name": "component",
+    "description": "Generates a classic react component in a module directory",
+    "usage": "component <module-name>/<component-name>",
     "files": [
-    {
-        "blueprint-path": "config/blueprints/dumb-component.ejs",
-        "parent-path": "client/modules/<%= helpers.capitalize(parent) %>",
-        "target-path": "components/<%= helpers.capitalize(name) %>/<%= helpers.capitalize(name) %>.js"
-    }
+        {
+            "blueprint-path": "config/blueprints/component/component.ejs",
+            "parent-path": "client/modules/<%= parent %>",
+            "target-path": "components/<%= helpers.capitalize(name) %>/<%= helpers.capitalize(name) %>.js"
+        }
     ]
 }
 ```
@@ -226,17 +260,10 @@ Blueprints are basically [ejs](https://github.com/mde/ejs) templates which are r
 
 We can use `merng` command to generate module or components
 
-1. `merng dumb-m [component-name]` Generates a dumb react component in a module directory
+1. `merng component <module-name>/<component-name>` Generates a classic react component in a module directory
 
-2. `merng functional-m [functional-component-name]` Generates a functional react component in a module directory
+1. `merng component-ws <module-name>/<component-name>` Generates a classic react component in a module directory with a styles file
 
-3. `merng module [module-name]` Generates a module including react components, reducer, action, style & express route, controller, model
+3. `merng component-f <module-name>/<component-name>` Generates a functional react component in a module directory
 
-
-<!-- 
-### Caveats
-
-#### FOUC (Flash of Unstyled Content)
-To make the hot reloading of CSS work, we are not extracting CSS in development. Ideally, during server rendering, we will be extracting CSS, and we will get a .css file, and we can use it in the html template. That's what we are doing in production.
-
-In development, after all scripts get loaded, react loads the CSS as BLOBs. That's why there is a second of FOUC in development. -->
+4. `merng module <module-name>` Generates a module including react components, reducer, action, style & express route, controller, model
