@@ -11,7 +11,12 @@ export function getUsers(req, res) {
 }
 
 export function getUser(req, res) {
-
+	User.findOne({ '_id': req.params.user_id }).exec((err, user) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.json({ user });
+  });
 }
 
 export function addUser(req, res) {
