@@ -4,7 +4,10 @@ import grey from 'material-ui/colors/grey';
 
 export const styles = theme => ({
   container: {
-    display: 'inline-flex',
+    display: 'block',
+    [theme.breakpoints.up('md')]: {
+      display: 'inline-flex',
+    },
     textAlign: 'center',
   },
   purpleAvatar: {
@@ -15,7 +18,7 @@ export const styles = theme => ({
   place: {
     backgroundColor: grey[300],
     margin: theme.spacing.unit,
-    width: 300,
+    width: 285,
     maxHeight: 45,
     padding: 12,
   },

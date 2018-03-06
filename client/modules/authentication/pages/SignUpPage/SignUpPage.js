@@ -39,7 +39,7 @@ class SignUpPage extends Component {
         travels: []
       }
     };
-  }
+  };
 
   isNextButtonDisabled = () => {
     let tmpChoice = true;
@@ -53,7 +53,7 @@ class SignUpPage extends Component {
     }
 
     this.handleNextButton(false);
-  }
+  };
 
   handleMailChange = (_mail) => {
     this.setState({
@@ -62,7 +62,7 @@ class SignUpPage extends Component {
         mail: _mail
       }
     });
-  }
+  };
 
   handleOwnVehiclesChange = (_ownVehicles) => {
     this.setState({
@@ -71,7 +71,7 @@ class SignUpPage extends Component {
         ownVehicles: _ownVehicles
       } 
     }, () => this.isNextButtonDisabled());
-  }
+  };
 
   handleCommunityTransportsChange = (_comTransports) => {
     this.setState({
@@ -80,7 +80,7 @@ class SignUpPage extends Component {
         comTransports: _comTransports
       } 
     }, () => this.isNextButtonDisabled());
-  }
+  };
 
   handleTravelsChange = (_travels) => {
     this.setState({
@@ -89,8 +89,9 @@ class SignUpPage extends Component {
         travels: _travels
       }
     }, () => this.isNextButtonDisabled());
-  }
+  };
 
+  // TODO Deal with this function
   getSteps = () => {
     return ['Valider vos informations', 'Ajouter vos modes de déplacement', 'Ajouter vos trajets', 'Régler vos préférences de notification', 'Activer votre compte'];
   };

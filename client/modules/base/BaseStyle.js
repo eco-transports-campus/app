@@ -5,7 +5,6 @@ export const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     zIndex: 1,
     overflow: 'hidden',
-    
   },
   appFrame: {
     position: 'relative',

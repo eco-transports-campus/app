@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react';
 // MaterialUI Stuff
 import { withStyles } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
+import Hidden from 'material-ui/Hidden';
 
 // Material Icons
 import ArrowForwardIcon from 'material-ui-icons/ArrowForward';
@@ -18,6 +19,10 @@ class AddedTravel extends Component {
     super(props);
 	}
 
+  deleteTravel = () => {
+    this.props.onDeleteTravel(this.props.travel.localId);
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -25,20 +30,22 @@ class AddedTravel extends Component {
       <div>
         <div className={classes.container}>
           <Avatar className={classes.purpleAvatar}>
-            {this.props.travel.id + 1}
+            {this.props.id + 1}
           </Avatar>
 
           <div className={classes.place}>
-            {this.props.travel.from }
+            {this.props.travel.from}
           </div>
 
-          <ArrowForwardIcon className={classes.arrow} />
+          <Hidden smDown>
+            <ArrowForwardIcon className={classes.arrow} />
+          </Hidden>
 
           <div className={classes.place}>
             {this.props.travel.to}
           </div>
 
-          <DeleteIcon className={classes.trash} />
+          <DeleteIcon className={classes.trash} onClick={this.deleteTravel} />
 
         </div>
       </div>
@@ -48,7 +55,9 @@ class AddedTravel extends Component {
 
 AddedTravel.propTypes = {
   classes: PropTypes.object.isRequired,
-  travel: PropTypes.object.isRequired
+  id: PropTypes.number.isRequired,
+  travel: PropTypes.object.isRequired,
+  onDeleteTravel: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(AddedTravel);

@@ -1,6 +1,11 @@
 // React
 import React, { Component, PropTypes } from 'react';
 
+// Lib
+// import pull from 'lodash-es/pull';
+// TODO use lodash-es instead of lodash
+import _ from 'lodash';
+
 // MaterialUI Stuff
 import { withStyles } from 'material-ui/styles';
 import Input, { InputLabel } from 'material-ui/Input';
@@ -24,56 +29,66 @@ class TravelStep extends Component {
     this.state = {
       tmpFrom: '',
       tmpTo: '',
-      nbOfTravels: 0
+      tmpTravelId: 0,
+      tmpTravels: []
     }
 
     this.handleTravelsChange = this.handleTravelsChange.bind(this);
     this.addTravel = this.addTravel.bind(this);
   }
 
-  handleTravelsChange = (travel, cb) => {
-    console.log(travel);
-    let tmpTravels = this.props.user.travels;
-    tmpTravels.push(travel);
+  handleTravelsChange = (cb) => {
+    this.props.onTravelsChange(this.state.tmpTravels);
 
-    this.props.onTravelsChange(tmpTravels);
-    cb();
-  }
+    if (cb && typeof cb === 'function') {
+      cb();
+    }
+  };
 
   handleFromChange = (e) => {
     this.setState({
       tmpFrom: e.target.value
     });
-  }
+  };
 
   handleToChange = (e) => {
     this.setState({
       tmpTo: e.target.value
     });
-  }
+  };
 
   // todo schema travel
   addTravel = () => {
     let tmpTravel = {
-      id: this.state.nbOfTravels,
       from: this.state.tmpFrom,
-      to: this.state.tmpTo
+      to: this.state.tmpTo,
+      localId: this.state.tmpTravelId
     };
 
-    this.handleTravelsChange(tmpTravel, () => {
+    this.state.tmpTravels.push(tmpTravel);
+
+    this.handleTravelsChange(() => {
       this.setState({
         tmpFrom: '',
         tmpTo: '',
-        nbOfTravels: this.state.nbOfTravels + 1
+        tmpTravelId: this.state.tmpTravelId + 1
       });
     });
-  }
+  };
+
+  deleteTravel = (id) => {
+    _.remove(this.state.tmpTravels, (t) => {
+      return t.localId === id;
+    });
+
+    this.handleTravelsChange();
+  };
 
   render() {
     const { classes } = this.props;
 
-    let travelsList = this.props.user.travels.map((travel) => {
-      return (<AddedTravel key={travel.id} travel={travel} />);
+    let travelsList = this.props.user.travels.map((travel, index) => {
+      return (<AddedTravel key={index} id={index} travel={travel} onDeleteTravel={this.deleteTravel} />);
     });
 
     return (
@@ -122,7 +137,7 @@ class TravelStep extends Component {
 TravelStep.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  onTravelsChange: PropTypes.func.isRequired
+  onTravelsChange: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(TravelStep);
