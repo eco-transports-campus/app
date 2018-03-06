@@ -38,7 +38,13 @@ export function addUser(req, res) {
 }
 
 export function setUser(req, res) {
-
+	const user = {name: req.body.user.name}
+	User.update( {'_id': req.params.user_id}, user, (err, result) => {
+		if (err) {
+			res.status(500).send(err);
+		}
+		res.json({ user });
+	})
 }
 
 export function deleteUser(req, res) {
