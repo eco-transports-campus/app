@@ -17,5 +17,5 @@ export function setUser(req, res) {
 }
 
 export function deleteUser(req, res) {
-	
+
 }
