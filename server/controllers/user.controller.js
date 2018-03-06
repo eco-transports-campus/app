@@ -42,5 +42,13 @@ export function setUser(req, res) {
 }
 
 export function deleteUser(req, res) {
+	User.findOne({ '_id': req.params.user_id }).exec((err, user) => {
+    if (err) {
+      res.status(500).send(err);
+    }
 
+    user.remove(() => {
+      res.status(200).end();
+    });
+  });
 }
