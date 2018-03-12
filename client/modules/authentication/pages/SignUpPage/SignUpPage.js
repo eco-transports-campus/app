@@ -36,7 +36,8 @@ class SignUpPage extends Component {
         mail: '',
         ownVehicles: [],
         comTransports: [],
-        travels: []
+        travels: [],
+        notifs: []
       }
     };
   };
@@ -49,11 +50,55 @@ class SignUpPage extends Component {
         break;
       case 1: tmpChoice = (this.state.user.ownVehicles.length === 0 && this.state.user.comTransports.length === 0);
         break;
+      case 2: tmpChoice = (this.state.user.travels.length === 0);
+        break;
+      case 3: tmpChoice = false;
+        break;
+      case 4: tmpChoice = false;
+        break;
       default: tmpChoice = true;
     }
 
-    this.handleNextButton(false);
+    this.handleNextButton(tmpChoice);
   };
+
+  // TODO Deal with this function
+  getSteps = () => {
+    return [
+      'Valider vos informations', 
+      'Ajouter vos modes de déplacement', 
+      'Ajouter vos trajets', 
+      'Régler vos préférences de notification', 
+      'Vérifier vos informations'];
+  };
+
+  getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <InfoStep 
+          userFromCAS={mockUserFromCAS} 
+          user={this.state.user} 
+          onMailChange={this.handleMailChange} />;
+      case 1:
+        return <TransportStep 
+          user={this.state.user} 
+          onOwnVehiclesChange={this.handleOwnVehiclesChange} 
+          onCommunityTransportsChange={this.handleCommunityTransportsChange} />;
+      case 2:
+        return <TravelStep 
+          user={this.state.user}
+          onTravelsChange={this.handleTravelsChange} />;
+      case 3:
+        return <NotifStep 
+          user={this.state.user}
+          onNotifsChange={this.handleNotifsChange} />;
+      case 4:
+        return <ActivationStep 
+          user={this.state.user} />;
+      default:
+        return 'Unknown step';
+      }
+    };
 
   handleMailChange = (_mail) => {
     this.setState({
@@ -91,34 +136,13 @@ class SignUpPage extends Component {
     }, () => this.isNextButtonDisabled());
   };
 
-  // TODO Deal with this function
-  getSteps = () => {
-    return ['Valider vos informations', 'Ajouter vos modes de déplacement', 'Ajouter vos trajets', 'Régler vos préférences de notification', 'Activer votre compte'];
-  };
-
-  getStepContent = (step) => {
-    switch (step) {
-      case 0:
-        return <InfoStep 
-          userFromCAS={mockUserFromCAS} 
-          user={this.state.user} 
-          onMailChange={this.handleMailChange} />;
-      case 1:
-        return <TransportStep 
-          user={this.state.user} 
-          onOwnVehiclesChange={this.handleOwnVehiclesChange} 
-          onCommunityTransportsChange={this.handleCommunityTransportsChange} />;
-      case 2:
-        return <TravelStep 
-          user={this.state.user}
-          onTravelsChange={this.handleTravelsChange} />;
-      case 3:
-        return <NotifStep />;
-      case 4:
-        return <ActivationStep />;
-      default:
-        return 'Unknown step';
-    }
+  handleNotifsChange = (_notifs) => {
+    this.setState({
+      user: {
+        ...this.state.user,
+        notifs: _notifs
+      }
+    }, () => this.isNextButtonDisabled());
   };
 
   handleNextButton = (val) => {
@@ -128,9 +152,13 @@ class SignUpPage extends Component {
   }
 
   handleNext = () => {
-    this.setState({
-      activeStep: this.state.activeStep + 1
-    }, () => this.isNextButtonDisabled());
+    if (this.state.activeStep !== this.getSteps().length -1) {
+      this.setState({
+        activeStep: this.state.activeStep + 1
+      }, () => this.isNextButtonDisabled());
+    } else {
+      this.handleValidation();
+    }
   };
 
   handleBack = () => {
@@ -139,11 +167,9 @@ class SignUpPage extends Component {
     }, () => this.isNextButtonDisabled());
   };
 
-  handleReset = () => {
-    this.setState({
-      activeStep: 0
-    }, () => this.isNextButtonDisabled());
-  };
+  handleValidation = () => {
+    console.log('Send user : ', this.state.user);
+  }
 
   render() {
     const { classes } = this.props;
@@ -184,15 +210,6 @@ class SignUpPage extends Component {
             );
           })}
         </Stepper>
-
-        {activeStep === steps.length && (
-          <Paper square elevation={0} className={classes.resetContainer}>
-            <Typography>All steps completed - you&quot;re finished</Typography>
-            <Button onClick={this.handleReset} className={classes.button}>
-              Reset
-            </Button>
-          </Paper>
-        )}
       </div>
     );
   }

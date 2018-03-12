@@ -35,6 +35,7 @@ class TravelStep extends Component {
 
     this.handleTravelsChange = this.handleTravelsChange.bind(this);
     this.addTravel = this.addTravel.bind(this);
+    this.deleteTravel = this.deleteTravel.bind(this);
   }
 
   handleTravelsChange = (cb) => {

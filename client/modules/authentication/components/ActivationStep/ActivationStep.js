@@ -17,13 +17,16 @@ class ActivationStep extends Component {
     const { classes } = this.props;
 
     return (
-      <div> Todo </div>
+      <div>
+        Votre profil est complété ! Vérifier vos informations puis validez votre inscription.
+      </div>
     );
   }
 }
 
 ActivationStep.propTypes = {
   classes: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(ActivationStep);
