@@ -1,6 +1,5 @@
 // React
 import React, { Component, PropTypes } from 'react';
-import Helmet from 'react-helmet';
 
 // MaterialUI Stuff
 import { withStyles } from 'material-ui/styles';

@@ -8,6 +8,8 @@ import Base from './modules/base/Base';
 import About from './modules/base/pages/AboutPage/AboutPage';
 import Sample from './modules/base/pages/SamplePage/SamplePage';
 import SignUp from './modules/authentication/pages/SignUpPage/SignUpPage';
+import SignIn from './modules/authentication/pages/SignInPage/SignInPage';
+import Authentication from './modules/authentication/Authentication';
 
 // require.ensure polyfill for node
 if (typeof require.ensure !== 'function') {
@@ -29,8 +31,11 @@ if (process.env.NODE_ENV !== 'production') {
 // react-router setup with code-splitting
 // More info: http://blog.mxstbr.com/2016/01/react-apps-with-pages/
 export default (
-  <Route path="/" component={Base} >
+  <Route path="/" component={Base}>
+    <Route path="/authentication" component={Authentication} />
     <Route path="/signup" component={SignUp} />
+    <Route path="/signin" component={SignIn} />
+
     <Route path="/home" component={Sample} />
     <Route path="/sample" component={Sample} />
     <Route path="/about" component={About} />

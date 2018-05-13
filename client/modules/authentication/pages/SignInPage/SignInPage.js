@@ -1,14 +1,15 @@
 // React
 import React, { Component, PropTypes } from 'react';
+import Helmet from 'react-helmet';
 
 // MaterialUI Stuff
 import { withStyles } from 'material-ui/styles';
 
 // Style
-import { styles } from './ActivationStepStyle';
+import { styles } from './SignInPageStyle';
 
 
-class ActivationStep extends Component {
+class SignInPage extends Component {
   constructor(props) {
     super(props);
 	}
@@ -18,15 +19,15 @@ class ActivationStep extends Component {
 
     return (
       <div>
-        <span>Votre profil est complété ! Vérifier vos informations puis validez votre inscription.</span>
+        <Helmet title="SignIn" />
+        SignIn page - TODO
       </div>
     );
   }
 }
 
-ActivationStep.propTypes = {
+SignInPage.propTypes = {
   classes: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(ActivationStep);
+export default withStyles(styles)(SignInPage);

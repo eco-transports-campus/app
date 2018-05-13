@@ -1,30 +1,20 @@
-// // React
-// import React, { Component, PropTypes } from 'react';
-// import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
+// React
+import React, { Component, PropTypes } from 'react';
 
-// // Import Style
-// import styles from './Authentication.css';
+// MaterialUI Stuff
+import { withStyles } from 'material-ui/styles';
 
-// class Authentication extends Component {
-//   render() {
-//     return (
-//     );
-//   }
-// }
+// Style
+import { styles } from './AuthenticationStyle';
 
-// const mapStateToProps = (state) => {
-//   return {};
-// };
+class Authentication extends Component {
+  render() {
+    return (<div> Authentication </div>);
+  }
+}
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {};
-// };
+Authentication.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-// Authentication.propTypes = {
-// };
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(Authentication);
+export default withStyles(styles)(Authentication);
